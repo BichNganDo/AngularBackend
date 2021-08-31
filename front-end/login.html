@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/toastr.min.css">
+    <link rel="stylesheet" href="./style.css">
+    <title>Register</title>
+</head>
+
+<body>
+
+    <div class="container" id="form-dangnhap">
+        <form method="post" class="form-dn mt-5" action="" id="form_register">
+            <p class="dangky">Đăng nhập</p>
+            <table style="margin: 20px auto;" cellspacing="0" cellpadding="5">
+                <tr>
+                    <td class="title">Tên đăng nhập</td>
+                    <td>
+                        <input type="text" name="username" id="username-dn" value="" />
+                        <p style="color: red;" id="username_error"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">Mật khẩu:</td>
+                    <td>
+                        <input type="password" name="password" id="password-dn" value="" />
+                        <p style="color: red;" id="password_error"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="button" name="register" class="btn-danger" id="login" value="Đăng nhập" /></td>
+                </tr>
+            </table>
+            <p class="text-center">Bạn chưa có tài khoản?<a style="color: red; text-decoration: none;" id="btn-dangky">
+                    Đăng ký</a></p>
+        </form>
+    </div>
+
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/toastr.min.js"></script>
+    <script src="./js/notification.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<div class="container-fluid">
+    <div class="card card-primary">
+
+        <!-- form start -->
+        <form>
+            <div class="card-body">
+                <div class="form-group">
+                    <label>UserName</label>
+                    <input ng-model="username" type="email" class="form-control" placeholder="UserName">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input ng-model="password" type="password" class="form-control" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label>Level</label>
+                    <select name="" id="" class="form-control" ng-model="level">
+                        <option value="1">Quản lý</option>
+                        <option value="2">Nhân viên</option>
+                    </select>
+                </div>
+                <div>
+                    <button type="submit" ng-click="testthongbao()" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- /.container-fluid -->
+</div>

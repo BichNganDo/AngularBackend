@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="${static_domain}/plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="${static_domain}/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="${static_domain}/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="${static_domain}/dist/css/toastr.min.css">
+    <title>Login</title>
+</head>
+
+
+<body class="login-page" style="min-height: 512.8px;" ng-app="myApp" ng-controller="LoginController">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="../../index2.html"><b>Admin</b>LTE</a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Sign in to start your session</p>
+                <div ng-form="formlogin">
+                    <form action="../../index3.html" method="post">
+                        <div class="input-group mb-3">
+                            <input ng-model="user.username" name="email" type="email" class="form-control" placeholder="Email" required>
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-envelope"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input ng-model="user.password" name="password" type="password" class="form-control" placeholder="Password" required>
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- <div class="col-8">
+                                <div class="icheck-primary">
+                                    <input type="checkbox" id="remember">
+                                    <label for="remember">
+                            Remember Me
+                          </label>
+                                </div>
+                            </div> -->
+                            <!-- /.col -->
+                            <div class="col-4">
+                                <button ng-click="login(user)" ng-disabled="!formlogin.$valid" type="button" class="btn btn-primary btn-block">Sign In</button>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                    </form>
+                </div>
+
+
+                <!-- 
+                <div class="social-auth-links text-center mb-3">
+                    <p>- OR -</p>
+                    <a href="#" class="btn btn-block btn-primary">
+                        <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
+                    </a>
+                    <a href="#" class="btn btn-block btn-danger">
+                        <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+                    </a>
+                </div> -->
+                <!-- /.social-auth-links -->
+
+                <!-- <p class="mb-1">
+                    <a href="forgot-password.html">I forgot my password</a>
+                </p>
+                <p class="mb-0">
+                    <a href="register.html" class="text-center">Register a new membership</a>
+                </p> -->
+            </div>
+            <!-- /.login-card-body -->
+        </div>
+    </div>
+    <!-- /.login-box -->
+
+
+
+    <div id="eJOY__extension_root" class="eJOY__extension_root_class" style="all: unset;"></div><iframe id="nr-ext-rsicon" style="position: absolute; display: none; width: 50px; height: 50px; z-index: 2147483647; border-style: none; background: transparent;"></iframe>
+
+    <script src="${static_domain}/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="${static_domain}/js/bootstrap.bundle.min.js"></script>
+    <script src="${static_domain}/js/angular.js"></script>
+    <script src="${static_domain}/js/angular-route.min.js"></script>
+    <script src="${static_domain}/dist/js/notification.js"></script>
+    <script src="${static_domain}/dist/js/toastr.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="${static_domain}/dist/js/adminlte.min.js"></script>
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('LoginController', function($scope, $http, $location) {
+            $scope.login = function(user) {
+                console.log(user.username);
+                console.log(user.password);
+
+                var data = $.param({
+                    username: user.username,
+                    password: user.password
+                });
+                console.log(data);
+                var config = {
+                    headers: {
+                        'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                    }
+                }
+                $http.post('http://localhost:8080/api/user?action=login', data, config)
+                    .then(function(response) {
+                        if (response.data.errorCode >= 0) {
+                            showNotification("success", response.data.message);
+                            //chuyển hướng sang trang khác
+                            window.location.replace("http://localhost:8080/admin");
+                        } else {
+                            showNotification("error", response.data.message);
+                        }
+                    })
+
+            }
+        })
+    </script>
+
+
+</body>
+
+</html>
