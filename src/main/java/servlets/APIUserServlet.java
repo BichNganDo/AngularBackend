@@ -3,6 +3,7 @@ package servlets;
 import com.google.gson.Gson;
 import common.APIResult;
 import common.Config;
+import entity.ListUsers;
 import entity.User;
 import helper.HttpHelper;
 import helper.SecurityHelper;
@@ -25,11 +26,20 @@ public class APIUserServlet extends HttpServlet {
         String action = request.getParameter("action");
         switch (action) {
             case "getuser": {
-                List<User> allUser = UserModel.INSTANCE.getAllUsers();
+                int pageIndex = Integer.parseInt(request.getParameter("page_index"));
+                int offset = (pageIndex - 1) * 10;
+                List<User> allUser = UserModel.INSTANCE.getSliceUser(offset, 10);
+                int totalUser = UserModel.INSTANCE.getTotalUser();
+
+                ListUsers listUsers = new ListUsers();
+                listUsers.setTotal(totalUser);
+                listUsers.setAllUsers(allUser);
+                listUsers.setItemPerPage(10);
+
                 if (allUser.size() > 0) {
                     result.setErrorCode(0);
                     result.setMessage("Success");
-                    result.setData(allUser);
+                    result.setData(listUsers);
                 } else {
                     result.setErrorCode(-1);
                     result.setMessage("Fail");

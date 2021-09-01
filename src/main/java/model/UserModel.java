@@ -18,7 +18,7 @@ public class UserModel {
     private final String NAMETABLE = "user";
     public static UserModel INSTANCE = new UserModel();
 
-    public List<User> getAllUsers() {
+    public List<User> getSliceUser(int offset, int limit) {
         List<User> resultListUsers = new ArrayList<>();
         Connection conn = null;
         try {
@@ -26,7 +26,8 @@ public class UserModel {
             if (null == conn) {
                 return resultListUsers;
             }
-            String sql = "SELECT * FROM `" + NAMETABLE + "`";
+            String sql = "SELECT * FROM `" + NAMETABLE + "` LIMIT " + limit + " OFFSET " + offset;
+            //" LIMIT " + limit + " OFFSET " + offset;
 
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             ResultSet rs = preparedStatement.executeQuery();
@@ -55,6 +56,31 @@ public class UserModel {
         }
 
         return resultListUsers;
+    }
+
+    public int getTotalUser() {
+        int total = 0;
+        Connection conn = null;
+        try {
+            conn = dbClient.getDbConnection();
+            if (null == conn) {
+                return total;
+            }
+            String sql = "SELECT COUNT(id) AS total FROM user";
+
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                total = rs.getInt("total");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            dbClient.releaseDbConnection(conn);
+        }
+
+        return total;
     }
 
     public User getUserByID(int id) {

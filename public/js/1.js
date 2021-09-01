@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ngRoute']);
+var app = angular.module('myApp', ['ngRoute', 'ngPagination']);
 app.controller('MyController', function($scope, $mdToast, $rootScope) {
     $rootScope.logout = function() {
         // window.location.replace("http://localhost:8080/login");
@@ -33,12 +33,37 @@ app.config(function($routeProvider, $locationProvider) {
 app.controller('listUsersController', function($scope, $http, $rootScope) {
     $rootScope.title = "List Users";
     //lấy dữ liệu users
-    var URLListUser = "http://localhost:8080/api/user?action=getuser";
-    $http.get(URLListUser).then(function(response) {
-        $scope.users = response.data.data;
-    }, function(error) {
-        console.log("error", error)
-    })
+    // var URLListUser = "http://localhost:8080/api/user?action=getuser";
+    // $http.get(URLListUser).then(function(response) {
+    //     $scope.users = response.data.data;
+    //     $scope.totalUser = 30;
+    // }, function(error) {
+    //     console.log("error", error)
+    // })
+
+    $scope.selectedPageIndex = 1;
+    $scope.getListUsers = function() {
+        $http({
+            method: "GET",
+            url: "http://localhost:8080/api/user",
+            params: {
+                action: 'getuser',
+                page_index: $scope.selectedPageIndex
+            },
+        }).then(function(response) {
+            console.log(response);
+            $scope.users = response.data.data.allUsers;
+            $scope.totalUser = response.data.data.total;
+        })
+    }
+
+    $scope.pageChanged = function(pageIndex) {
+        $scope.selectedPageIndex = pageIndex;
+        $scope.getListUsers();
+    };
+
+    $scope.getListUsers();
+
 
     //"changeEdit()"
     $scope.changeEdit = function(item) { //item hay biến khác cũng được, không cần phải trùng tên với bên user
