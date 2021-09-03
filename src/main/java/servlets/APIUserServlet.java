@@ -27,6 +27,7 @@ public class APIUserServlet extends HttpServlet {
         switch (action) {
             case "getuser": {
                 int pageIndex = Integer.parseInt(request.getParameter("page_index"));
+
                 int offset = (pageIndex - 1) * 10;
                 List<User> allUser = UserModel.INSTANCE.getSliceUser(offset, 10);
                 int totalUser = UserModel.INSTANCE.getTotalUser();
